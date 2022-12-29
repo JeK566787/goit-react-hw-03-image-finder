@@ -4,6 +4,9 @@ import { Component } from 'react';
 import { fetchImages } from 'services/API';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Modal } from './Modal/Modal';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Button } from './Button/Button';
+import { Loader } from './Loader/Loader';
 export class App extends Component {
   state = {
     query: '',
@@ -44,38 +47,30 @@ export class App extends Component {
   setLargeImageURL = largeImageURL => {
     this.setState({ largeImgUrl: largeImageURL });
   };
-
+  onBtnClick = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
   render() {
     return (
       <>
         <Searchbar onFormSubmit={this.onFormSubmit} />
+        {this.state.isEmpty && (
+          <p>Nothing is found for this {this.state.query}</p>
+        )}
         {this.state.error && <p>something wrong {this.state.error}</p>}
         <div>{this.state.selectedPostId}</div>
-        <ul>
-          {this.state.images.map(el => {
-            return (
-              <li
-                key={el.id}
-                class="gallery-item"
-                onClick={() => this.setLargeImageURL(el.largeImageURL)}
-              >
-                <img src={el.webformatURL} alt={el.title} />
-              </li>
-            );
-          })}
-        </ul>
+        <ImageGallery
+          images={this.state.images}
+          setLargeImageURL={this.setLargeImageURL}
+        />
+        {this.state.showBtn && <Button onBtnClick={this.onBtnClick} />}
         {this.state.largeImgUrl && (
           <Modal
             setLargeImageURL={this.setLargeImageURL}
             largeImageURL={this.state.largeImgUrl}
           />
         )}
-        {this.state.isLoading && (
-          <div className="lds-ripple">
-            <div></div>
-            <div></div>
-          </div>
-        )}
+        {this.state.isLoading && <Loader />}
       </>
     );
   }

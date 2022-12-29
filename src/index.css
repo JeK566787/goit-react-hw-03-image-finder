@@ -13,21 +13,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.lds-ripple {
+.loader {
   display: inline-block;
   position: relative;
   width: 80px;
   height: 80px;
 }
-.lds-ripple div {
+.loader div {
   position: absolute;
   border: 4px solid rgb(32, 226, 39);
   opacity: 1;
   border-radius: 50%;
   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
-.lds-ripple div:nth-child(2) {
+.loader div:nth-child(2) {
   animation-delay: -0.5s;
 }
 @keyframes lds-ripple {
