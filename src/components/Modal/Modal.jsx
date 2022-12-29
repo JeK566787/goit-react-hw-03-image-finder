@@ -1,5 +1,6 @@
 import { Component } from 'react';
-
+import css from './Modal.module.css';
+import PropTypes from 'prop-types';
 export class Modal extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.onEscapePress);
@@ -19,11 +20,14 @@ export class Modal extends Component {
   };
   render() {
     return (
-      <div className="Overlay" onClick={this.handleClick}>
-        <div className="Modal">
+      <div className={css.Overlay} onClick={this.handleClick}>
+        <div className={css.Modal}>
           <img src={this.props.largeImageURL} alt="" />
         </div>
       </div>
     );
   }
 }
+Modal.propTypes = {
+  setLargeImageURL: PropTypes.func,
+};

@@ -1,6 +1,5 @@
-import './styles.css';
 import { Component } from 'react';
-
+import css from './App.module.css';
 import { fetchImages } from 'services/API';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Modal } from './Modal/Modal';
@@ -25,7 +24,6 @@ export class App extends Component {
       this.setState({ isLoading: true });
       fetchImages(query, page)
         .then(({ hits, totalHits }) => {
-          console.log(hits);
           if (hits.length === 0) {
             this.setState({ isEmpty: true });
             return;
@@ -52,7 +50,7 @@ export class App extends Component {
   };
   render() {
     return (
-      <>
+      <div className={css.App}>
         <Searchbar onFormSubmit={this.onFormSubmit} />
         {this.state.isEmpty && (
           <p>Nothing is found for this {this.state.query}</p>
@@ -63,6 +61,7 @@ export class App extends Component {
           images={this.state.images}
           setLargeImageURL={this.setLargeImageURL}
         />
+        {this.state.isLoading && <Loader />}
         {this.state.showBtn && <Button onBtnClick={this.onBtnClick} />}
         {this.state.largeImgUrl && (
           <Modal
@@ -70,8 +69,7 @@ export class App extends Component {
             largeImageURL={this.state.largeImgUrl}
           />
         )}
-        {this.state.isLoading && <Loader />}
-      </>
+      </div>
     );
   }
 }
