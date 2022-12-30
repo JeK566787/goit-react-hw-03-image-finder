@@ -5,7 +5,7 @@ export const fetchImages = async (query, page) => {
     params: {
       key: '31582938-c9e43ffb2e6f46798ceb70690',
       q: query,
-      page: 1,
+      page: page,
       per_page: 15,
       image_type: 'photo',
       orientation: 'horizontal',
